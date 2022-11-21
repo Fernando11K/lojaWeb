@@ -1,0 +1,22 @@
+#Ativa o módulo Rewrite, que faz a reescrita de URL.
+RewriteEngine On 
+
+#Determina que o rewrite só se aplicará se nao (!) existir um arquivo (-f) com aquele nome
+RewriteCond %{SCRIPT_FILENAME} !-f 
+
+#Determina que o rewrite só se aplicará se nao (!) existir um diretório (-d) com aquele nome
+RewriteCond %{SCRIPT_FILENAME} !-d
+
+#RewriteCond %{REQUEST_FILENAME} !-l
+#RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+#Redireciona o usuário para index.php para qualquer URL entrado.
+RewriteRule ^(.*)$ index.php
+
+#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+#http://localhost:8000/api/controller/usuario_add.php 
+#http://localhost:8000/api/usuario/add 
+#http://localhost:8000/api/controlller/produto.php?list=1345
+#http://localhost:8000/api/produto/list/1345
+
