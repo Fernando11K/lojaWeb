@@ -30,7 +30,7 @@ CREATE TABLE Funcionario(
 );
 
 
-/* DML: limguagem de manipulação de dados */
+/* DML: linguagem de manipulação de dados */
 INSERT into usuario (nome, email, senha) 
 VALUES ('Ana Maria', 'ana@email.com', '12345');
 

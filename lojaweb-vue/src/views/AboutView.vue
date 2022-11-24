@@ -1,15 +1,24 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <NavBar />
   </div>
+  <section>
+    <h2>About</h2>
+  </section>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<script>
+import NavBar from '../components/NavBar.vue';
+
+export default {
+  components: { NavBar }
+
 }
+
+
+</script>
+
+
+<style>
+
 </style>
