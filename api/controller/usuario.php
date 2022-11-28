@@ -1,19 +1,58 @@
 <?php
 
-include "../model/Usuario.php";
-$request = $_REQUEST;
+include_once("./model/Usuario.php");
+function usuarioController($method, $router)
+{
 
-if (isset($request["add"])) { //isset = verifica se a variavel foi criada ou existe
-    echo "Cadastro";
+    if ($method == "POST") {
+        if ($router == "/usuario/add")
+            try {
+
+                $dados = json_decode(file_get_contents('php://input'));
+                //var_dump($dados);
+                $user = new Usuario();
+                $user->nome = $dados->nome;
+                $user->email = $dados->email;
+                $user->senha = $dados->senha;
+                $user->cpf = $dados->cpf;
+                $user->foto = $dados->foto;
+                $user->telefone = $dados->telefone;
+                $user->data_nasc = $dados->data_nasc;
+                // $user->ativo = $dados->ativo;
+                $user->add();
+                echo "Usuário cadastrado!";
+
+            } catch (Exception $e) {
+                echo json_encode("error:" . $e->getMessage());
+            }
+    }
+
+    if ($method == "GET") {
+        if ($router == "/usuario/list") {
+            try {
+                $user = new Usuario();
+                $result = $user->getAll();
+                echo json_encode($result);
+            } catch (Exception $e) {
+                echo json_encode("error:" . $e->getMessage());
+            }
+        }
+        if (!empty(strstr($router, "/usuario/get"))) {
+            try {
+                //$id = $_GET["id"];
+                //var_dump($_GET);
+                //var_dump(explode("/", $router)); //Explode: separa uma string em vetor com base em um
+                //caracter. No exemplo "/"
+                $id = explode("/", $router)[3];
+                $user = new Usuario();
+                $result = $user->getId($id);
+                echo json_encode($result);
+            } catch (Exception $e) {
+                echo json_encode("error:" . $e->getMessage());
+            }
+        }
+    }
+
 }
-
-if (isset($request["edit"])) {
-    echo "Editar";
-}
-
-if (isset($request["list"])) {
-    echo "Lista";
-}
-
 
 ?>

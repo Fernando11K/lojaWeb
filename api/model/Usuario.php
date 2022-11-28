@@ -9,7 +9,8 @@ class Usuario
     public $cpf;
     public $senha;
     public $telefone;
-    public $ative = true;
+    public $data_nasc;
+    public $ativo = true;
 
     function add()
     {
@@ -17,15 +18,17 @@ class Usuario
 
             $dao = new DAO;
             $conn = $dao->conecta(); //Conectar ao banco de dados;
-            $sql = "INSERT INTO usuario (nome, foto, cpf, email, senha, telefone) 
-            VALUES (:nome, :foto, :cpf, :email, md5(:senha), :telefone)"; //Criar o comando SQL com os parametros
-            $newSenha = crypt(this->senha, '');
+            $sql = "INSERT INTO usuario (nome, foto, cpf, email, senha, telefone, data_nasc) 
+            VALUES (:nome, :foto, :cpf, :email, md5(:senha), :telefone, :data_nasc)"; //Criar o comando SQL com os parametros
+            //Define a nova senha criptografada.
+            $newSenha = crypt($this->senha, '$5$rounds=5000$' . $this->email . '$');
             $statement = $conn->prepare($sql); //Prepara o comando SQL para executar;
             $statement->bindParam(":nome", $this->nome);
             $statement->bindParam(":email", $this->email);
             $statement->bindParam(":cpf", $this->cpf);
             $statement->bindParam(":foto", $this->foto);
-            $statement->bindParam(":senha", $this->senha);
+            $statement->bindParam(":data_nasc", $this->data_nasc);
+            $statement->bindParam(":senha", $newSenha);
             $statement->bindParam(":telefone", $this->telefone);
             $statement->execute(); //Grava os dados no banco de dados;
 
