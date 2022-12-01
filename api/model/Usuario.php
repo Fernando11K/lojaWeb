@@ -20,8 +20,10 @@ class Usuario
             $conn = $dao->conecta(); //Conectar ao banco de dados;
             $sql = "INSERT INTO usuario (nome, foto, cpf, email, senha, telefone, data_nasc) 
             VALUES (:nome, :foto, :cpf, :email, md5(:senha), :telefone, :data_nasc)"; //Criar o comando SQL com os parametros
+
             //Define a nova senha criptografada.
             $newSenha = crypt($this->senha, '$5$rounds=5000$' . $this->email . '$');
+
             $statement = $conn->prepare($sql); //Prepara o comando SQL para executar;
             $statement->bindParam(":nome", $this->nome);
             $statement->bindParam(":email", $this->email);
@@ -77,6 +79,83 @@ class Usuario
         } catch (Exception $e) {
             throw new Exception("Erro ao lista todos os usuários!" . $e->getMessage());
         }
+    }
+
+    function update()
+    {
+
+        try {
+
+            $dao = new DAO;
+            $conn = $dao->conecta(); //Conectar ao banco de dados;
+            $sql = "UPDATE usuario SET 
+                nome = :nome, 
+                foto = :foto, 
+                cpf = :cpf, 
+                email = :email, 
+                -- senha = md5(:senha), 
+                telefone = :telefone, 
+                data_nasc = :data_nasc
+                where id_usuario = :id";
+
+            $statement = $conn->prepare($sql); //Prepara o comando SQL para executar;
+            $statement->bindParam(":nome", $this->nome);
+            $statement->bindParam(":email", $this->email);
+            $statement->bindParam(":cpf", $this->cpf);
+            $statement->bindParam(":foto", $this->foto);
+            $statement->bindParam(":data_nasc", $this->data_nasc); //YYYY-MM-DD -> BR: DD-MM-YYYY
+            $statement->bindParam(":telefone", $this->telefone);
+            $statement->bindParam(":id", $this->id_usuario);
+            $statement->execute(); //Grava os dados no banco de dados;
+
+        } catch (Exception $e) {
+
+            throw new Exception("Erro ao cadastrar o usuário!" . $e->getMessage());
+        }
+
+
+    }
+    // function delete($id) //Remoção física do banco de dados
+
+    // {
+
+    //     try {
+
+    //         $dao = new DAO;
+    //         $conn = $dao->conecta(); //Conectar ao banco de dados;
+    //         $sql = "DELETE usuario where id_usuario = : id";
+
+    //         $statement = $conn->prepare($sql); //Prepara o comando SQL para executar;
+    //         $statement->bindParam(":id", $id);
+    //         $statement->execute(); //Grava os dados no banco de dados;
+
+    //     } catch (Exception $e) {
+
+    //         throw new Exception("Erro ao cadastrar o usuário!" . $e->getMessage());
+    //     }
+
+
+    // }
+
+    function deleteLogico($id) //Remoção física do banco de dados
+
+    {
+
+        try {
+
+            $dao = new DAO;
+            $conn = $dao->conecta(); //Conectar ao banco de dados;
+            $sql = "UPDATE usuario SET usuario.ativo = false where id_usuario = :id";
+            $statement = $conn->prepare($sql); //Prepara o comando SQL para executar;
+            $statement->bindParam(":id", $id);
+            $statement->execute(); //Grava os dados no banco de dados;
+
+        } catch (Exception $e) {
+
+            throw new Exception("Erro ao cadastrar o usuário!" . $e->getMessage());
+        }
+
+
     }
 
 }

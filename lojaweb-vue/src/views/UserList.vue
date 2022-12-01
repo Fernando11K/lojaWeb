@@ -2,7 +2,7 @@
 <script>
 import userService from '@/service/userService';
 export default {
-    //components: { NavBar },
+    components: { NavBar },
     data() {
         return {
             Usuarios: []
@@ -13,12 +13,15 @@ export default {
     },
     methods: {
         lista() {
-            this.Usuarios = userService.list();
+            userService.list(dados => {
+                this.Usuarios = JSON.parse(dados);
+            });
         }
     }
 }
 </script>
 <template>
+    <NavBar />
 
 </template>
 <style>
