@@ -137,8 +137,8 @@ class Usuario
 
     // }
 
-    function deleteLogico($id) //Remoção física do banco de dados
-
+    function deleteLogico($id) //Remoção lógica do banco de dados
+    
     {
 
         try {

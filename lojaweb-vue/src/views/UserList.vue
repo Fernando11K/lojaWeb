@@ -1,6 +1,6 @@
 
 <script>
-import userService from '@/service/userService';
+import userService from '../service/userService';
 export default {
     components: { NavBar },
     data() {
