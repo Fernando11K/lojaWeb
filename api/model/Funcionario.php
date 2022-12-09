@@ -12,10 +12,5 @@ class Funcionario extends Usuario
 
 
 
-
-
-
-
-
 }
 ?>

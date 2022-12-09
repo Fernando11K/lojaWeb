@@ -1,8 +1,15 @@
 import { User } from '@/model/User.js'; //@ referencia a pasta principal do sistema (SRC)
-
+import http from './config';
 export default {
 
     add: function (user = new User) {
+        return http.post("usuario/add", user)
+    },
+    list: function () {
+        return http.get("usuario/list")
+    },
+
+    addOld: function (user = new User) {
         console.log(user);
         try {
             const xhttp = new XMLHttpRequest();
@@ -23,7 +30,7 @@ export default {
         }
     },
 
-    list: function (callback) {
+    listOld: function (callback) {
         try {
             const xhttp = new XMLHttpRequest();
             xhttp.onload = function () {

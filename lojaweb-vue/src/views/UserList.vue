@@ -35,6 +35,7 @@
 <script>
 import NavBar from '../components/NavBar.vue';
 import userService from '../service/userService';
+
 export default {
     components: { NavBar },
     data() {
@@ -43,11 +44,37 @@ export default {
         }
     },
     mounted() {
-        this.lista()
+        this.list()
     },
     methods: {
-        lista() {
-            userService.list(dados => {
+        list() {
+            userService.list()
+                .then(response => {
+                    this.Usuarios = response
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert("Erro ao retornar a lista de usuário!")
+                })
+                .finally(() => {
+
+                })
+        },
+        getId(id) {
+            userService.getId(id)
+                .then(response => {
+                    this.Usuarios = response
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert("Erro ao retornar usuário!")
+                })
+                .finally(() => {
+
+                })
+        },
+        listaOld() {
+            userService.listOld(dados => {
                 this.Usuarios = JSON.parse(dados);
             });
         }

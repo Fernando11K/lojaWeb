@@ -3,7 +3,8 @@
 include_once("./service/DAO.php");
 class Endereco
 {
-    public $cep; //PK - primary key (string)
+    public $id_endereco;  //PK - primary key (string)
+    public $cep;
     public $logradouro;
     public $bairro;
     public $cidade;
@@ -16,20 +17,20 @@ class Endereco
             $dao = new DAO();
             $conn = $dao->conecta();
             $sql = "INSERT into endereco (cep, logradouro, bairro, cidade, uf) 
-                VALUES (:cep, :logradouro, :ze, :cidade, :uf)";
+                VALUES (:cep, :logradouro, :bairro, :cidade, :uf)";
             $stman = $conn->prepare($sql);
             $stman->bindParam(":cep", $this->cep);
             $stman->bindParam(":logradouro", $this->logradouro);
-            $stman->bindParam(":ze", $this->bairro);
+            $stman->bindParam(":bairro", $this->bairro);
             $stman->bindParam(":cidade", $this->cidade);
             $stman->bindParam(":uf", $this->uf);
             $stman->execute();
         } catch (Exception $e) {
-            throw new Exception("Erro ao cadastra o endereço!" . $e->getMessage());
+            throw new Exception("Erro ao cadastrar o endereço!" . $e->getMessage());
         }
     }
 
-    function get($cep)
+    function getId($cep)
     {
         try {
             $dao = new DAO();
@@ -41,11 +42,29 @@ class Endereco
             $result = $stman->fetchAll();
             return $result;
         } catch (Exception $e) {
-            throw new Exception("Erro ao cadastra o endereço!" . $e->getMessage());
+            throw new Exception("Erro ao cadastrar o endereço!" . $e->getMessage());
+        }
+    }
+    function getAll()
+    {
+        try {
+            $dao = new DAO();
+            $conn = $dao->conecta();
+            $sql = "Select * from endereco";
+            // $sql = "Select * from endereco limit :inicio, :final";
+            $stman = $conn->prepare($sql);
+            // $stman->bindParam(":inicio", $inicio);
+            //  $stman->bindParam(":final", $final);
+
+            $stman->execute();
+            $result = $stman->fetchAll();
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception("Erro ao buscar endereços!" . $e->getMessage());
         }
     }
 
-    function up($idCep)
+    function update($id_endereco)
     {
         try {
             $dao = new DAO();
@@ -56,14 +75,14 @@ class Endereco
             bairro = :bairro,
             cidade = :cidade,
             uf = :uf 
-            WHERE endereco.cep = :idCep";
+            WHERE id_endereco = :id_endereco";
             $stman = $conn->prepare($sql);
             $stman->bindParam(":cepNew", $this->cep);
             $stman->bindParam(":logradouro", $this->logradouro);
             $stman->bindParam(":ze", $this->bairro);
             $stman->bindParam(":cidade", $this->cidade);
             $stman->bindParam(":uf", $this->uf);
-            $stman->bindParam(":idCep", $idCep);
+            $stman->bindParam(":id_endereco", $id_endereco);
             $stman->execute();
         } catch (Exception $e) {
             throw new Exception("Erro ao cadastra o endereço!" . $e->getMessage());
@@ -75,7 +94,7 @@ class Endereco
         try {
             $dao = new DAO;
             $conn = $dao->conecta();
-            $sql = "DELETE endereco where endereco.cep = :cep";
+            $sql = "DELETE endereco where cep = :cep";
             $stman = $conn->prepare($sql);;
             $stman->bindParam(":cep", $this->cep);
             $stman->execute();
