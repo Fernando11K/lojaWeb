@@ -15,7 +15,7 @@
                 <th>Ativo</th>
             </thead>
             <tbody>
-                <tr v-for="usuario in Usuarios" :key="usuario.id_usuario">
+                <tr v-for="usuario in usuarios" :key="usuario.id_usuario">
                     <td>{{ usuario.id_usuario }}</td>
                     <td>{{ usuario.nome }}</td>
                     <td>{{ usuario.email }}</td>
@@ -40,7 +40,7 @@ export default {
     components: { NavBar },
     data() {
         return {
-            Usuarios: []
+            usuarios: []
         }
     },
     mounted() {
@@ -50,20 +50,21 @@ export default {
         list() {
             userService.list()
                 .then(response => {
-                    this.Usuarios = response
+                    this.usuarios = response.data
+
                 })
                 .catch(error => {
                     console.log(error)
                     alert("Erro ao retornar a lista de usuário!")
                 })
                 .finally(() => {
-
+                    console.log(this.usuarios)
                 })
         },
         getId(id) {
             userService.getId(id)
                 .then(response => {
-                    this.Usuarios = response
+                    this.usuarios = response
                 })
                 .catch(error => {
                     console.log(error)
@@ -75,7 +76,7 @@ export default {
         },
         listaOld() {
             userService.listOld(dados => {
-                this.Usuarios = JSON.parse(dados);
+                this.usuarios = JSON.parse(dados);
             });
         }
     }

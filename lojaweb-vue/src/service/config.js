@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const configure = {
-    local: location.origin.replace(location.port, ""),
+    local: location.origin.replace(location.port, 8000),
     //local: location.origin.replace(location.port, "") + "/api/"
 };
 
@@ -13,8 +13,6 @@ const http = axios.create({
     }
 });
 
-export default http;
-
 // http.interceptors.request.use(
 //     function (config) {
 //         const token = localStorage.getItem('token');
@@ -22,4 +20,5 @@ export default http;
 //         return config;
 //     }
 // );
+export default http;
 

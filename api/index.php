@@ -16,7 +16,7 @@ if (isset($_SERVER["REQUEST_METHOD"]) && isset($_SERVER["PATH_INFO"])) {
     header("Access-Control-Max-Age: 3600"); //1hora == 3600 seg;
     header("Access-Control-Allow-Credentials: true");
 
-    var_dump($_SERVER);
+    // var_dump($_SERVER);
 
     usuarioController($method, $router);
     enderecoController($method, $router);
