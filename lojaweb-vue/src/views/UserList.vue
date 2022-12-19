@@ -1,18 +1,20 @@
 <template>
     <NavBar />
     <section class="container">
-        <h2>Usuarios</h2>
-        <table class="table">
+        <h2 class="text-center">Usuarios</h2>
+        <table class="text-center table table-bordered">
             <thead>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Data Nasc.</th>
-                <th>CPF</th>
-                <th>Foto Perfil</th>
-                <!-- <th>Senha</th> -->
-                <th>Tel.</th>
-                <th>Ativo</th>
+                <tr class="bg-black bg-opacity-10 border-dark">
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Data Nasc.</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Foto Perfil</th>
+                    <!-- <th>Senha</th> -->
+                    <th scope="col">Tel.</th>
+                    <th scope="col">Ativo</th>
+                </tr>
             </thead>
             <tbody>
                 <tr v-for="usuario in usuarios" :key="usuario.id_usuario">
@@ -28,6 +30,29 @@
                 </tr>
             </tbody>
         </table>
+    </section>
+
+    <section class="container">
+
+        <h2>Usuarios Cards</h2>
+        <div class="d-flex">
+            <div class="card" style="width: 18rem;" v-for="user in usuarios" :key="user.id_usuario">
+                <img :src="user.foto" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.nome }}</h5>
+                    <p class="card-text">ID: {{ user.id_usuario }} </p>
+
+                    <p class="card-text">{{ user.email }}</p>
+                    <p class="card-text">{{ user.data_nasc }}</p>
+                    <p class="card-text">{{ user.cpf }}</p>
+                    <p class="card-text"></p>
+                    <!-- <p class="card-text">{{ user.senha }}</p> -->
+                    <p class="card-text">{{ user.telefone }}</p>
+                    <p class="card-text">{{ user.ativo }}</p>
+                    <a href="#" class="btn btn-primary">Editar</a>
+                </div>
+            </div>
+        </div>
     </section>
 
 </template>

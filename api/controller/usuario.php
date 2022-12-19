@@ -5,7 +5,7 @@ function usuarioController($method, $router)
 {
 
     if ($method == "POST") {
-        if ($router == "/usuario/add")
+        if (!empty(strstr($router,"/usuario/add")))
             try {
 
                 $dados = json_decode(file_get_contents('php://input'));
@@ -28,8 +28,25 @@ function usuarioController($method, $router)
                 echo json_encode("error:" . $e->getMessage());
             }
     }
+      if (!empty(strstr($router, "/usuario/logon"))) {
+            try {
+                $dados = json_decode(file_get_contents('php://input'));
+                $user = new Usuario();
+                $result = $user->logon($dados->email, $dados->pass);
+                if ($result != null) {
+                    http_response_code(200);
+                    echo  json_encode($result);
+                } else {
+                    http_response_code(401);
+                    echo  json_encode("Usuario não encontrado!");
+                }
+            } catch (Exception $e) {
+                http_response_code(500);
+                echo json_encode("error:" . $e->getMessage());
+            }
+        }
     if ($method == "PUT") {//Alterações de dados
-        if ($router == "/usuario/update")
+        if (!empty(strstr($router, "/usuario/update")))
             try {
                 $dados = json_decode(file_get_contents('php://input'));
                 //var_dump($dados);
@@ -55,7 +72,7 @@ function usuarioController($method, $router)
     }
 
     if ($method == "GET") { //Busca de dados
-        if ($router == "/usuario/list") {
+        if (!empty(strstr($router, "/usuario/list"))) {
             try {
                 $user = new Usuario();
                 $result = $user->getAll();
@@ -86,7 +103,7 @@ function usuarioController($method, $router)
         
     }
      if ($method == "DELETE") { //Busca de dados
-        if ($router == "/usuario") {
+        if (!empty(strstr($router, "/usuario"))) {
             try {
                 $dados = json_decode(file_get_contents('php://input'));
                 $user = new Usuario();

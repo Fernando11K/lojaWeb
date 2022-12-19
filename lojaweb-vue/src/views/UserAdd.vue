@@ -47,7 +47,7 @@
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-primary mx-1" @click="cadastro()">
+            <button type="button" class="btn btn-primary mx-1" @click="userAdd()">
                 Cadastrar
             </button>
             <button type="button" class="btn btn-danger">
@@ -74,8 +74,15 @@ export default {
         }
     },
     methods: {
-        cadastro() {
-            userService.add(this.user);
+        userAdd() {
+            userService.add(this.user)
+                .then(response => {
+                    console.log(response)
+                    alert("Cadastro!");
+                })
+                .catch(error => {
+                    alert("Erro! ", error);
+                });
         }
     }
 

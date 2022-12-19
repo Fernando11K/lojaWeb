@@ -8,6 +8,9 @@ export default {
     list: function () {
         return http.get("usuario/list")
     },
+    getId: id => {
+        return http.get("usuario/get" + id)
+    },
 
     addOld: function (user = new User) {
         console.log(user);
@@ -48,6 +51,10 @@ export default {
             console.error(error);
             alert("Erro: " + error);
         }
+    },
+    logon: function (user) {
+        return http.post(user);
     }
+
 
 }
