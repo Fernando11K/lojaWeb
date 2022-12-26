@@ -93,10 +93,12 @@ class Usuario
                 foto = :foto, 
                 cpf = :cpf, 
                 email = :email, 
-                -- senha = md5(:senha), 
+                senha = md5(:senha), 
                 telefone = :telefone, 
                 data_nasc = :data_nasc
-                where id_usuario = :id";
+                where id_usuario = :id_usuario";
+
+            $newSenha = crypt($this->senha, '$5$rounds=5000$' . $this->email . '$');
 
             $statement = $conn->prepare($sql); //Prepara o comando SQL para executar;
             $statement->bindParam(":nome", $this->nome);
@@ -104,8 +106,9 @@ class Usuario
             $statement->bindParam(":cpf", $this->cpf);
             $statement->bindParam(":foto", $this->foto);
             $statement->bindParam(":data_nasc", $this->data_nasc); //YYYY-MM-DD -> BR: DD-MM-YYYY
+              $statement->bindParam(":senha", $newSenha);
             $statement->bindParam(":telefone", $this->telefone);
-            $statement->bindParam(":id", $this->id_usuario);
+            $statement->bindParam(":id_usuario", $this->id_usuario);
             $statement->execute(); //Grava os dados no banco de dados;
 
         } catch (Exception $e) {
@@ -173,6 +176,7 @@ class Usuario
             $stman->bindParam(":email", $email);
             $stman->bindParam(":pass", $newSenha);
             $stman->execute();
+            $nashasg = $newSenha;
             $result = $stman->fetchAll();
             return $result ? $result : null;
         } catch (Exception $e) {

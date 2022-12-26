@@ -27,7 +27,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
-import userService from '@/service/userService';
+import userService from '/src/service/userService';
 export default {
     components: { NavBar },
     data() {
@@ -43,12 +43,13 @@ export default {
             userService.logon(this.usuario)
                 .then((response) => {
                     console.log(response.data);
-                    localStorage.setItem("user", JSON.stringify(response.data));
+                    sessionStorage.setItem("user", JSON.stringify(response.data));
                     alert("Usuario logado!");
+                    console.log(response.data)
                 })
                 .catch((error) => {
                     console.log(error);
-                    alert("Erro ao fazer ao entrar!");
+                    alert("Erro ao entrar!");
                 });
         }
     }

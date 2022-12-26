@@ -3,13 +3,17 @@
 include_once("./model/Usuario.php");
 function usuarioController($method, $router)
 {
+    $method == "GET" ? getUsuario($method, $router) : false;
+   $method == "POST" ? postUsuario($method, $router) : false;
+    $method == "PUT" ? putUsuario($method, $router) : false;
+   $method == "DELETE" ? deleteUsuario($method, $router) : false;
 
-    if ($method == "POST") {
+    }
+    function postUsuario($method, $router) {
         if (!empty(strstr($router,"/usuario/add")))
             try {
 
                 $dados = json_decode(file_get_contents('php://input'));
-                //var_dump($dados);
                 $user = new Usuario();
                 $user->nome = $dados->nome;
                 $user->email = $dados->email;
@@ -27,7 +31,7 @@ function usuarioController($method, $router)
                 http_response_code(500);
                 echo json_encode("error:" . $e->getMessage());
             }
-    }
+    
       if (!empty(strstr($router, "/usuario/logon"))) {
             try {
                 $dados = json_decode(file_get_contents('php://input'));
@@ -35,7 +39,7 @@ function usuarioController($method, $router)
                 $result = $user->logon($dados->email, $dados->pass);
                 if ($result != null) {
                     http_response_code(200);
-                    echo  json_encode($result);
+                    echo  json_encode($result[0]);
                 } else {
                     http_response_code(401);
                     echo  json_encode("Usuario não encontrado!");
@@ -45,7 +49,8 @@ function usuarioController($method, $router)
                 echo json_encode("error:" . $e->getMessage());
             }
         }
-    if ($method == "PUT") {//Alterações de dados
+    }
+    function putUsuario($method, $router) {
         if (!empty(strstr($router, "/usuario/update")))
             try {
                 $dados = json_decode(file_get_contents('php://input'));
@@ -70,7 +75,8 @@ function usuarioController($method, $router)
                 echo json_encode("error:" . $e->getMessage());
             }
     }
-
+    
+function getUsuario($method, $router) {
     if ($method == "GET") { //Busca de dados
         if (!empty(strstr($router, "/usuario/list"))) {
             try {
@@ -78,9 +84,11 @@ function usuarioController($method, $router)
                 $result = $user->getAll();
                 echo json_encode($result);
                  http_response_code(200);
+                 return true;
             } catch (Exception $e) {
                  http_response_code(500);
                 echo json_encode("error:" . $e->getMessage());
+                return false;
             }
             
         }
@@ -95,14 +103,18 @@ function usuarioController($method, $router)
                 $result = $user->getId($id);
                 echo json_encode($result);
                  http_response_code(200);
+                 return true;
             } catch (Exception $e) {
                 http_response_code(500);
                 echo json_encode("error:" . $e->getMessage());
+                return false;
             }
         }
         
     }
-     if ($method == "DELETE") { //Busca de dados
+    }
+    function deleteUsuario($method, $router) {
+   
         if (!empty(strstr($router, "/usuario"))) {
             try {
                 $dados = json_decode(file_get_contents('php://input'));
@@ -115,8 +127,7 @@ function usuarioController($method, $router)
                 echo json_encode("error:" . $e->getMessage());
             }
         }
-
-}
+    }
 // Outra forma
 
 // if ($method == "POST") { //Envio dados e cadastros
@@ -150,6 +161,4 @@ function usuarioController($method, $router)
 //         }
 //     }
 
-
-}
 ?>

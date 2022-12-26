@@ -2,15 +2,6 @@ import { User } from '@/model/User.js'; //@ referencia a pasta principal do sist
 import http from './config';
 export default {
 
-    add: function (user = new User) {
-        return http.post("usuario/add", user)
-    },
-    list: function () {
-        return http.get("usuario/list")
-    },
-    getId: id => {
-        return http.get("usuario/get" + id)
-    },
 
     addOld: function (user = new User) {
         console.log(user);
@@ -52,8 +43,17 @@ export default {
             alert("Erro: " + error);
         }
     },
+    add: function (user = new User) {
+        return http.post("usuario/add", user)
+    },
+    list: function () {
+        return http.get("usuario/list")
+    },
+    getId: id => {
+        return http.get("usuario/get" + id)
+    },
     logon: function (user) {
-        return http.post(user);
+        return http.post("usuario/logon", user);
     }
 
 

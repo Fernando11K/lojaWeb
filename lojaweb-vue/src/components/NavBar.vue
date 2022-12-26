@@ -37,7 +37,8 @@
                         <a class="nav-link disabled">Link</a>
                     </li> -->
                 </ul>
-                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                <!-- deslogado -->
+                <ul class="navbar-nav ms-auto my-2 my-lg-0" v-if="!this.usuario">
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -50,6 +51,23 @@
                         <RouterLink class="nav-link" aria-current="page" to="/user/enter">Entrar</RouterLink>
                     </li>
                 </ul>
+
+                <!-- logado -->
+                <ul class="navbar-nav ms-auto my-2 my-lg-0" v-else>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" aria-current="page" to="/user/add">
+                            {{ this.usuario.nome }}
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" aria-current="page" to="/user/enter">Sair</RouterLink>
+                    </li>
+
+                </ul>
             </div>
         </div>
     </nav>
@@ -59,9 +77,24 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import { User } from '/src/model/User.js';
 export default {
     name: 'NavBar',
-    components: { RouterLink }
+    components: { RouterLink },
+    mounted() {
+        this.getUser()
+    },
+    data() {
+        return {
+            usuario: new User()
+        }
+    },
+    methods: {
+        getUser() {
+            let user = JSON.parse(sessionStorage.getItem("user"))
+            this.usuario = !user ? null : user;
+        }
+    }
 }
 
 </script>

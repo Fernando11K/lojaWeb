@@ -3,8 +3,9 @@
 include_once("./model/Produto.php");
 function produtoController($method, $router)
 {
-   $method == "GET" ? get($method, $router) : false;
+   $method == "GET" ? getProduto($method, $router) : false;
    $method == "POST" ? postProduto($method, $router) : false;
+   $method == "DELETE" ? deleteProduto($method, $router) : false;
    
 
 }
@@ -41,10 +42,10 @@ function postProduto($method, $router) {
     }
 
 }
-
+}
 function getProduto($method, $router) {
      if ($method == "GET") { //Busca de dados
-        if (!empty(strstr(($router == "/produto/list")))) {
+        if (!empty(strstr($router, "/produto/list"))) {
             try {
                 $produto = new Produto();
                 $result = $produto->getAll();
@@ -74,8 +75,8 @@ function getProduto($method, $router) {
         }
         
     }
-
-      if ($method == "DELETE") { //Busca de dados
+}
+function deleteProduto($method, $router) {
         if (!empty(strstr(($router == "/produto")))) {
             try {
                 $dados = json_decode(file_get_contents('php://input'));
@@ -91,6 +92,6 @@ function getProduto($method, $router) {
         }
 
 }
-}
-}
+
+
 ?>

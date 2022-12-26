@@ -3,7 +3,7 @@
 include_once("./model/Endereco.php");
 function enderecoController($method, $router)
 {
-   $method == "GET" ? get($method, $router) : false;
+   $method == "GET" ?  false : get($method, $router);
    $method == "POST" ? post($method, $router) : false;
    
 
@@ -12,7 +12,7 @@ function enderecoController($method, $router)
 function post($method, $router) {
 
     if ($method == "POST") {
-        if (!empty(strstr($router == "/endereco/add")))
+        if (!empty(strstr($router, "/endereco/add")))
             try {
 
                 $dados = json_decode(file_get_contents('php://input'));
