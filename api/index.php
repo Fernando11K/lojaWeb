@@ -1,5 +1,7 @@
 <?php
-include_once("./config/config.php");
+include_once("./config/config_dev.php");
+// include_once("./config/config_prod.php");
+include_once('./service/jwt.php');
 include_once("./controller/usuario.php");
 include_once("./controller/endereco.php");
 include_once("./controller/produto.php");
@@ -20,6 +22,15 @@ if (isset($_SERVER["REQUEST_METHOD"]) && isset($_SERVER["REQUEST_URI"])) {
     }
 
     // var_dump($_SERVER);
+
+     // Validação
+   // $receiveToken = isset($_SERVER["HTTP_AUTHORIZATION"]) ? $_SERVER["HTTP_AUTHORIZATION"] : null;
+   // $auth = validJWT($receiveToken);
+    // if (!$auth) {
+    //     http_response_code(401);
+    //     echo json_encode(array("message" => "Acesso negado!"));
+    // }
+
 
     usuarioController($method, $router);
     enderecoController($method, $router);

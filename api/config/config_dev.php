@@ -1,5 +1,4 @@
 <?php
-include("secrets.php");
 
 // Configuração do PHP
 error_reporting(E_ALL);
@@ -15,3 +14,9 @@ define("DB", "lojaweb"); // Nome do banco de dados
 
 define("MIDIAS_USER", "/../midias/user"); // Local da pasta onde será gravado os dados
 define("MIDIAS_PRODUTOS", "/../midias/produtos"); // Local da pasta onde será gravado os dados
+
+//chave do JWT
+define("KEY", "ff08e69475562803be134abe13fbd09f27356cfd14944353e789a9afa4661a70");
+
+// Senha do banco de dados
+define("PASS", "");

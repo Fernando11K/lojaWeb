@@ -16,6 +16,6 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 #Redireciona o usuário para index.php para qualquer URL entrado.
 RewriteRule . index.php
 
-#RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 
